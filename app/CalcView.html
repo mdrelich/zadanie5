@@ -1,0 +1,54 @@
+{extends file="../templates/main.html"}
+
+{block name=footer}MD{/block}
+
+{block name=content}
+
+<h3>Kalkulator Kredytowy</h3>
+
+
+<form class="pure-form pure-form-stacked" action="{$conf->action_root}calcCompute" method="post">
+    <fieldset>
+        <label>Kwota: </label>
+        <input type="number" placeholder="Kwota" min="1" name="x" value="{$form->x}"/><br/>
+        <label>Na ile czasu(w latach) </label>
+        <input type="number" min="1" placeholder="Ilosc lat" name="y" value="{$form->y}"/><br/>
+        <label>Oprocentowanie("prosze podać procenty (5%=5)) </label>
+        <input type="number" min="1" placeholder="Oprocentowanie" name="z" value="{$form->z}"/><br/>
+    </fieldset>
+    <button type="submit" class="pure-button pure-button-primary">Oblicz</button>
+</form>
+
+<div class="messages">
+
+    {if $msgs->isError()}
+    <h4>błędy: </h4>
+    <ol class="err">
+        {foreach $msgs->getErrors() as $err}
+        {strip}
+        <li>{$err}</li>
+        {/strip}
+        {/foreach}
+    </ol>
+    {/if}
+
+    {if $msgs->isInfo()}
+    <h4>Informacje: </h4>
+    <ol class="inf">
+        {foreach $msgs->getInfos() as $inf}
+        {strip}
+        <li>{$inf}</li>
+        {/strip}
+        {/foreach}
+    </ol>
+    {/if}
+
+    {if isset($res->result)}
+    <h4>Wynik</h4>
+    <p class="res">Miesięczna rata: {$res->result}zł
+    </p>
+    {/if}
+
+</div>
+
+{/block}
